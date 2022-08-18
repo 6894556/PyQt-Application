@@ -15,23 +15,23 @@ class MyApp(QWidget):
     def initUI(self):
         self.lcd = QLCDNumber(self)
 
-        btn1 = QPushButton('1', self)
-        btn2 = QPushButton('+', self)
-        btn3 = QPushButton('=', self)
+        self.btn1 = QPushButton('1', self)
+        self.btn2 = QPushButton('+', self)
+        self.btn3 = QPushButton('=', self)
 
         hbox = QHBoxLayout()
-        hbox.addWidget(btn1)
-        hbox.addWidget(btn2)
-        hbox.addWidget(btn3)
+        hbox.addWidget(self.btn1)
+        hbox.addWidget(self.btn2)
+        hbox.addWidget(self.btn3)
 
         vbox = QVBoxLayout()
         vbox.addWidget(self.lcd)
         vbox.addLayout(hbox)
         self.setLayout(vbox)
 
-        btn1.clicked.connect(self.slot1)
-        btn2.clicked.connect(self.slot2)
-        btn3.clicked.connect(self.slot3)
+        self.btn1.clicked.connect(self.slot1)
+        self.btn2.clicked.connect(self.slot2)
+        self.btn3.clicked.connect(self.slot3)
 
         self.setWindowTitle('')
         self.setGeometry(300, 300, 300, 200)
@@ -62,9 +62,7 @@ class MyApp(QWidget):
     # -- 3) 결과값을 lcd에 표시
     def slot3(self):
         operand2 = self.lcd.value()
-        # operator = self.btn2.text() # - 구현 실패
-        # print(operator)
-        operator = '+'
+        operator = self.btn2.text()
 
         if operator == '+':
             rst = int(self.operand1) + int(operand2)
