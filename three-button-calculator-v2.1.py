@@ -1,7 +1,7 @@
-# v2.1 :
+# v2.1 : v1.x 수정
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget,
-                             QLCDNumber, QLabel, QPushButton,
+                             QLCDNumber, QPushButton,
                              QHBoxLayout, QVBoxLayout)
 
 class MyApp(QWidget):
