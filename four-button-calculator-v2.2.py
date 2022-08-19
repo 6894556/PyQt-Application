@@ -14,6 +14,7 @@ class MyApp(QWidget):
         self.operand2 = 0
         self.initUI()
 
+
     def initUI(self):
         self.lcd = QLCDNumber(self)
         self.btn1 = QPushButton('1', self)
