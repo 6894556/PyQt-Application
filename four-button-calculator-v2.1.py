@@ -9,7 +9,7 @@ class MyApp(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        
+
 
     def initUI(self):
         self.lcd = QLCDNumber(self)
