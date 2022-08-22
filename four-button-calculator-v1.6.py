@@ -1,10 +1,15 @@
-# four-v1.7 : 슬롯 안에
+# four-v1.6 : 버튼 그룹 사용해보기
+# 버튼 그룹 :
+# - 그룹 내 버튼들을 하나만 선택되게 하는 기능을 한다.
+# - 버튼 그룹 안에 버튼들을 넣으면 그 중 하나만 선택되도록 하는 기능을 한다.
+# - setExclusive(True)가 default이다.
+# - 다른 언어에서도 많이 사용하는 개념이다.
+# - e.g. 안드로이드의 라디오 버튼 여러 개 중 하나만 선택되어야할 때 사용
 import sys
-
-from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import (QApplication, QWidget,
                              QLCDNumber, QPushButton,
                              QHBoxLayout, QVBoxLayout, QButtonGroup)
+
 
 class MyApp(QWidget):
     def __init__(self):
@@ -24,11 +29,11 @@ class MyApp(QWidget):
         ############################# choijy  >>>>>>>>>>
         self.btn3.setCheckable(True)
         self.btn2.setCheckable(True)
-        self.btn4.setCheckable(True)
-        self.btn2.setAutoExclusive(True)
-        self.btn3.setAutoExclusive(True)
-        self.btn4.setAutoExclusive(True)
-       ############################# choijy  <<<<<<<<<<<<
+
+        self.btgrp = QButtonGroup(self)
+        self.btgrp.addButton(self.btn2, 1)
+        self.btgrp.addButton(self.btn3, 2)
+        ############################# choijy  <<<<<<<<<<<<
 
         hbox = QHBoxLayout()
         hbox.addWidget(self.btn1)
@@ -46,17 +51,13 @@ class MyApp(QWidget):
         self.btn3.clicked.connect(self.slot3)
         self.btn4.clicked.connect(self.slot4)
 
-        self.setWindowTitle('four-v1.7')
+        self.setWindowTitle('four-v1.5')
         self.setGeometry(300, 300, 300, 200)
         self.show()
-
-
-
 
     def slot1(self):
         self.operand += '1'
         self.lcd.display(self.operand)
-
 
     def slot2(self):
         '''
@@ -87,7 +88,8 @@ class MyApp(QWidget):
     def slot4(self):
         ## 클릭된 버튼이 연산자 버튼 둘 중 어느 것인지 알 수 없으므로
         ## 모든 operator 버튼의 상태가 구분이 안되게 바꿔봤습니다.
-
+        #self.btn2.setCheckable(False)
+        #self.btn3.setCheckable(False)
         self.operand2 = self.lcd.value()
         if self.operator =='+':
             rst = int(self.operand1) + int(self.operand2)
@@ -97,9 +99,6 @@ class MyApp(QWidget):
         rst = 0
         self.operand1 = 0
         self.operand2 = 0
-        self.btn4.setAutoExclusive(False)
-        self.btn4.setChecked(False)
-        self.btn4.setAutoExclusive(True)
 
 
 if __name__ == '__main__':
