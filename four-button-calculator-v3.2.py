@@ -1,4 +1,5 @@
 # four-v3.2 : AC 버튼 슬롯 정의 & 연결
+# four-v3.2의 문제점 : AC 버튼을 눌러도 operator의 선택이 취소가 되지 않음 (취소 되어야 함)
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget,
                              QLCDNumber, QPushButton,

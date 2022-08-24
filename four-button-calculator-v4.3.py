@@ -1,4 +1,9 @@
-# four-v4.2 : B (back) 버튼 슬롯 정의 & 연결
+# four-v4.3 : v4.2의 Back 버튼 동작 버그 수정
+# bug1 : first operand를 입력하고 operator를 선택한 후에 B버튼을 눌렀을 때 lcd에서 값이 다 사라진다.
+# bug2 : operand 두개 입력하고 operator 한개 선택한 후에 =버튼을 누른 계산 결과에서 백버튼을 누를 경우 lcd에 보이는 값이 전부 지워진다.
+# (전부 지워지면 안되고 일의 자리 숫자만 지워져야 한다.)
+# bug3 : B버튼이 지운 일의 자리 숫자가 유일한 숫자일 경우 LCD에 아무것도 표시되지 않는다.
+# (아무것도 표시되지 않을 게 아니라 0이 표시되게 고치고 싶다.)
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget,
                              QLCDNumber, QPushButton,
@@ -38,12 +43,13 @@ class MyApp(QWidget):
         self.setLayout(vbox)
 
         self.btn1.clicked.connect(self.slot1)
-        self.btn3.clicked.connect(self.slot3)
         self.btn2.clicked.connect(self.slot2)
+        self.btn3.clicked.connect(self.slot3)
         self.btn4.clicked.connect(self.slot4)
 
-        self.setWindowTitle('four-v4.1')
-        self.setGeometry(300, 300, 300, 200)
+
+        self.setWindowTitle('four-v4.3')
+        self.setGeometry(300, 300, 300 ,200)
         self.show()
 
     def slot1(self):
@@ -52,30 +58,35 @@ class MyApp(QWidget):
 
     def slot2(self):
         self.operand1 = self.lcd.value()
-        self.operand = ''
-        self.operator = ''
         self.operator = self.btn2.text()
+        self.operand = ''
+        # print(self.operand1)
+        # print(self.operator)
 
-    # B 버튼이 클릭된 경우
-    # - lcd에서 마지막으로 더해진 숫자 하나를 제거하는게 보여야함
-    # - self.operand 에서 마지막으로 더해진 숫자 하나가 제거되야함
     def slot3(self):
-        # bug report 1 : first operand를 입력하고 operator를 선택한 후에 B버튼을 눌렀을 때 lcd에서 값이 다 사라진다.
-        # bug report 2 : operand 두개 입력하고 operator 한개 선택한 후에 =버튼을 누른 계산 결과에서 백버튼을 누를 경우 lcd에 보이는 값이 전부 지워진다.
-        # (전부 지워지면 안되고 일의 자리 숫자만 지워져야 한다.)
+        # lcd.value로 현재값을 불러온다.
+        # 불러온 현재값을 str로 전환한다. (불러온 값이 int라는 가정)
+        # str = str[:-1]로 마지막 element를 제거한다.
+        # 마지막 element를 제거한 str을 lcd.display(str)한다.
+        # self.operand = self.lcd.value()
+
+        ### 버그1, 버그3 해결
+        ### getvalue : 문자열 self.operand의 길이가 0보다 작거나 같으면 "0"을 반환하고
+        ###             0보다 크면  self.operand를 반환
         self.operand = self.operand[:-1]
-        self.lcd.display(self.operand)
-        # self.lcd.display(back)
-        # print(self.operand)
-        # self.lcd.
+        getvalue = lambda a: "0" if (len(self.operand) <= 0) else self.operand
+        self.lcd.display(getvalue(self.operand))
 
     def slot4(self):
         self.operand2 = self.lcd.value()
-
-        rst = int(self.operand1) + int(self.operand2)
+        if self.operator == '+':
+            rst = int(self.operand1) + int(self.operand2)
         self.lcd.display(rst)
-        rst = 0
-        self.operand = ''
+        # initialization
+        # self.operand = ''
+        ### 버그4 해결 : self.operand = '' 대신에
+        ### self.operand = str(rst)로 self.operand 초기화
+        self.operand = str(rst)
         self.operand1 = 0
         self.operator = ''
         self.operand2 = 0

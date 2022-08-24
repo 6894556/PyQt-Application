@@ -7,6 +7,10 @@ from PyQt5.QtWidgets import (QApplication, QWidget,
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
+        self.operand = ''
+        self.operand1 = 0
+        self.operator = ''
+        self.operand2 = 0
         self.initUI()
 
     def initUI(self):
