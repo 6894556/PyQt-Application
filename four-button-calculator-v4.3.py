@@ -69,13 +69,8 @@ class MyApp(QWidget):
         # str = str[:-1]로 마지막 element를 제거한다.
         # 마지막 element를 제거한 str을 lcd.display(str)한다.
         # self.operand = self.lcd.value()
-
-        ### 버그1, 버그3 해결
-        ### getvalue : 문자열 self.operand의 길이가 0보다 작거나 같으면 "0"을 반환하고
-        ###             0보다 크면  self.operand를 반환
         self.operand = self.operand[:-1]
-        getvalue = lambda a: "0" if (len(self.operand) <= 0) else self.operand
-        self.lcd.display(getvalue(self.operand))
+        self.lcd.display(self.operand)
 
     def slot4(self):
         self.operand2 = self.lcd.value()
@@ -83,10 +78,7 @@ class MyApp(QWidget):
             rst = int(self.operand1) + int(self.operand2)
         self.lcd.display(rst)
         # initialization
-        # self.operand = ''
-        ### 버그4 해결 : self.operand = '' 대신에
-        ### self.operand = str(rst)로 self.operand 초기화
-        self.operand = str(rst)
+        self.operand = ''
         self.operand1 = 0
         self.operator = ''
         self.operand2 = 0
