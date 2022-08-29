@@ -56,7 +56,7 @@ class MyApp(QWidget):
         self.btn3.clicked.connect(self.slot3)
         self.btn4.clicked.connect(self.slot4)
 
-        self.setWindowTitle('five-v2.1')
+        self.setWindowTitle('five-v2.2')
         self.setGeometry(300, 300, 300, 200)
         self.show()
     # 0버튼만 10번 눌렀을 때 LCD에 표시되는 0의 크기가 작아진다. (버그인가?)
@@ -86,13 +86,19 @@ class MyApp(QWidget):
         self.operand = ''
         self.operator = self.btn3.text()
 
-
+    ## 새로운 버그 : Error가 표시되면 처음으로 되돌아갈 방법이 없다.
     def slot4(self):
         self.operand2 = self.lcd.value()
+        # print(type(self.operand2))
         if self.operator == '/':
-            # int 0으로 해야할지, str 0으로 해야할지 헷갈립니다.
-            if self.operand2 == 0:
-                rst = 'Error'
+            # self.lcd.value는 float 타입을 반환하므로 0.0
+            if self.operand2 == 0.0:
+                ## 버그3 : seven-segment로 Error표시가 가능하다. 하지만 작동하지 않는다. 왜?
+                rst = "Error"
+                ## rst = "E r r o r"
+                ##   : 문자와 문자 사이에 스페이스를 넣어주면 어떨지 테스트 해보기 위함. (but failed)
+                ## 버그3 해결 : LCD의 digitCount가 1인 상태이므로 digitCount가 5인 Error를 표시하지 못한 것.
+                self.lcd.setDigitCount(len(rst))
             else:
                 rst = int(self.operand1) / int(self.operand2)
         self.lcd.display(rst)
