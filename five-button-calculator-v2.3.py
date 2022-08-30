@@ -8,6 +8,8 @@
 # - Clear 버튼을 클릭하면 0이 저장되어 있는 self.operand2를 초기화한다.
 #   =버튼을 누르기 전의 상태로 돌려보낸다?
 # - All Clear 버튼을 누르면 모든 값을 초기화 하고 LCD에 0을 표시한다.
+# - Error가 LCD에 표시된 상태에서 operator를 클릭하고 operand 클릭 후 =버튼 누르면
+#   Error만 LCD에 표시한다.
 # five-v2.3에서는 첫 번째 해결방향을 구현해보고자 한다.
 
 import sys
