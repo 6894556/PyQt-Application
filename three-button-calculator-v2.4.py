@@ -67,14 +67,19 @@ class MyApp(QWidget):
     # -- 3) 결과값을 lcd에 표시
     def slot3(self):
         self.btn2.toggle()
-        operand2 = self.lcd.value()
+        self.operand2 = self.lcd.value()
         self.operator = self.btn2.text()
 
         if self.operator == '+':
-            rst = int(self.operand1) + int(operand2)
+            rst = int(self.operand1) + int(self.operand2)
             self.lcd.display(rst)
         rst = 0
         # equal sign을 한번 이상 눌렀을 경우 값이 계속 증가하는 이슈를 방지하기 위함
+        # rst가 lcd에 표시된 상태에서 operator를 클릭하고
+        # 숫자를 입력하고 equal sign 버튼을 클릭하면
+        # rst + 입력한 숫자가 계산되는 이유가 궁금합니다.
+        # (이를 방지하기 위한 차원에서 위 rst = 0를 추가했습니다)
+        # (하지만 결과적으로는 더 자연스러운 실행이 가능한듯 합니다.)
         self.operand1 = 0
         self.operand2 = 0
 

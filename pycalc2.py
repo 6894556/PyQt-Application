@@ -1,19 +1,26 @@
+# Model=View-Controller(MVC) desing pattern
+# - model : handles the input values and the calculations
+# - view : the calculator window on screen
+# - controller : will receive the target math expression from the gui,
+# ask the model to perform calculations, and update the gui with the result.
+'''calculator's view'''
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget,
+    QApplication, QMainWindow,
     QGridLayout, QVBoxLayout,
-    QLineEdit, QPushButton
-)
+    QWidget, QLineEdit, QPushButton,
+    )
 
 WINDOW_SIZE = 235
 DISPLAY_HEIGHT = 35
 BUTTON_SIZE = 40
 
 class PyCalcWindow(QMainWindow):
+    # view of calculator
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("PyCalc")
+        self.setWindowTitle('pycalc2')
         self.setFixedSize(WINDOW_SIZE, WINDOW_SIZE)
         self.generalLayout = QVBoxLayout()
         centralWidget = QWidget(self)
@@ -47,13 +54,28 @@ class PyCalcWindow(QMainWindow):
 
         self.generalLayout.addLayout(buttonsLayout)
 
+    def setDiaplayText(self, text):
+        '''set the display's text'''
+        self.display.setText(text)
+        '''set the cursor's focus on the display'''
+        self.display.setFocus()
+
+    def displayText(self):
+        '''get the display's text'''
+        '''when user clicks the equal sign'''
+        return self.display.text()
+
+    def clearDisplay(self):
+        '''clear the display'''
+        '''when user clicks the cancel sign'''
+        self.setDiaplayText("")
 
 def main():
+    # pycalc2.py's main function
     pycalcApp = QApplication([])
     pycalcWindow = PyCalcWindow()
     pycalcWindow.show()
     sys.exit(pycalcApp.exec())
-
 
 if __name__ == '__main__':
     main()

@@ -1,4 +1,7 @@
-# v2.7 : 슬롯 연결
+# v2.7 : three-v2.4에서 객체변수로 설정하지 않은 것을 객체
+# 변수로 변경하고 임시 보료한 self.btn2.setEnabled(False)을
+# 없애버림
+# 2.7은 2.4를 개선한 버젼.
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget,
                              QLCDNumber, QPushButton,
